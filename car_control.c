@@ -5,9 +5,15 @@ int threads_running = 0;
 pthread_attr_t thread_attr;
 pthread_t httpd_thread_id;
 
+int httpd_request_handle(int port);
+
+
 static void *httpd_loop(void *arg)
 {
 	arg = arg;
+
+	httpd_request_handle(8888);
+
 	pthread_mutex_lock(&global_lock);
 	threads_running--;
 	pthread_mutex_unlock(&global_lock);
