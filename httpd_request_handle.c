@@ -468,30 +468,30 @@ post_iterator(void *cls,
 {
 	struct Request *request = cls;
 	struct Session *session = request->session;
+	int status;
+	int i;
+	const char gpio_stat[][4] = 	{{0, 1, 0, 1},\
+					 {1, 1, 1, 1},\
+					 {1, 0, 1, 0},\
+					 {0, 0, 0, 0}};
 
-	if (0 == strcmp("DONE", key)) {
-		fprintf(stdout,
-			"Session `%s' submitted `%s', `%s'\n",
-			session->sid, session->value_1, session->value_2);
-		return MHD_YES;
+	DEBUG("get %s\n", key);
+	if ((key[0] == 'V') || (key[0] == 'v')) {
+		if ((key[1] >= '0') && (key[1] <= '9')) {
+			status = key[1] - '0';
+			if (status <= sizeof(gpio_stat)/sizeof(gpio_stat[0])){
+				DEBUG("Going to set gpio to state%d\n", status);
+				for (i=0; i<4; i++) {
+					set_gpio(i, gpio_stat[status][i]);
+				}
+				return MHD_YES;
+			} else {
+				ERR("Unknow gpio state%d\n", status);
+				return MHD_YES;
+			}
+		}
 	}
-	if (0 == strcmp("v1", key)) {
-		if (size + off > sizeof(session->value_1))
-			size = sizeof(session->value_1) - off;
-		memcpy(&session->value_1[off], data, size);
-		if (size + off < sizeof(session->value_1))
-			session->value_1[size + off] = '\0';
-		return MHD_YES;
-	}
-	if (0 == strcmp("v2", key)) {
-		if (size + off > sizeof(session->value_2))
-			size = sizeof(session->value_2) - off;
-		memcpy(&session->value_2[off], data, size);
-		if (size + off < sizeof(session->value_2))
-			session->value_2[size + off] = '\0';
-		return MHD_YES;
-	}
-	fprintf(stderr, "Unsupported form value `%s'\n", key);
+	ERR("Unsupported form value `%s'\n", key);
 	return MHD_YES;
 }
 
@@ -542,6 +542,8 @@ create_response(void *cls,
 	int ret;
 	unsigned int i;
 
+	DEBUG("Method: %s, request: 0x%x\n", method, *ptr);
+
 	request = *ptr;
 	if (NULL == request) {
 		request = calloc(1, sizeof(struct Request));
@@ -575,6 +577,10 @@ create_response(void *cls,
 	session->start = time(NULL);
 	if (0 == strcmp(method, MHD_HTTP_METHOD_POST)) {
 		/* evaluate POST data */
+		DEBUG("Get upload_data_size: %d\n", *upload_data_size);
+		if (*upload_data_size > 0) {
+			DEBUG("Get upload_data: %s\n", upload_data);
+		}
 		MHD_post_process(request->pp, upload_data, *upload_data_size);
 		if (0 != *upload_data_size) {
 			*upload_data_size = 0;

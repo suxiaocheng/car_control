@@ -31,8 +31,8 @@ enum control_pin{
 };
 
 enum control_status{
-	STATUS_ON,
-	STATUS_OFF
+	STATUS_OFF,
+	STATUS_ON
 };
 
 int set_gpio(enum control_pin pin, enum control_status status);

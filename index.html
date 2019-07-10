@@ -17,13 +17,13 @@
 <h1>Welcome to George's control program!</h1>
 
 <p>
-<input id="left" type="submit" value="left">
-<input id="mid" type="submit" value="mid">
-<input id="right" type="submit" value="right">
+<form action="/" method="post">
+<input id="left" type="submit" name ="V0" value="left">
+<input id="inc" type="submit" name ="V1" value="inc">
+<input id="right" type="submit" name ="V2" value="right">
 <br>
-<input id="inc" type="submit" value="inc">
-<input id="stop" type="submit" value="stop">
-<input id="dec" type="submit" value="dec">
+<input style="width:190px" id="stop" type="submit" name ="V3" value="stop">
+</form>
 <br>
 <p>
 
@@ -33,10 +33,11 @@
 <p>Thank you for using the 
 	<a href="https://github.com/suxiaocheng/car_control">software.</a>
 </p>
-
+<!--
 <script language="JavaScript">
 	setTimeout(function(){location.reload()},1000);
 </script>
+-->
 
 </body>
 </html>
