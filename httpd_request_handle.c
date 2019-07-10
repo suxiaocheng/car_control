@@ -34,6 +34,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include "debug.h"
+#include "gpio_ctrl.h"
 
 /**
  * Invalid method page.
@@ -658,6 +659,10 @@ static void expire_sessions()
 				sessions = pos->next;
 			else
 				prev->next = next;
+			if (pos->raw_html != NULL) {
+				free(pos->raw_html);
+				pos->raw_html = NULL;
+			}
 			free(pos);
 		} else
 			prev = pos;
