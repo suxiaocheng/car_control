@@ -32,8 +32,8 @@ enum mode_t {
 	MODE_MAX
 };
 
-#define GPIO_LEFT_FRONT_FORWARD    0x28
-#define GPIO_LEFT_FRONT_BACKWARD   0x29
+#define GPIO_LEFT_FRONT_FORWARD    0x8
+#define GPIO_LEFT_FRONT_BACKWARD   0x9
 
 #define GPIO_RIGHT_FRONT_FORWARD   0x4
 #define GPIO_RIGHT_FRONT_BACKWARD  0x5
@@ -41,8 +41,8 @@ enum mode_t {
 #define GPIO_LEFT_BACK_FORWARD    0x2
 #define GPIO_LEFT_BACK_BACKWARD   0x3
 
-#define GPIO_RIGHT_BACK_FORWARD   0x0
-#define GPIO_RIGHT_BACK_BACKWARD  0x1
+#define GPIO_RIGHT_BACK_FORWARD   0x1
+#define GPIO_RIGHT_BACK_BACKWARD  0x0
 
 int init_gpio(void);
 int set_mode(int mode);

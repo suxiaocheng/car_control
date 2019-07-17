@@ -1,8 +1,8 @@
 INCPATH=
 LIBSPATH=
-LIBS=-lpthread -lmicrohttpd # -lwiringPi
+LIBS=-lpthread -lmicrohttpd -lwiringPi
 CC=gcc
-CFLAGS+=-g
+CFLAGS+=-g -D__RASPBERRY_PI__
 
 SRC:=$(wildcard *.c)
 OBJ := $(patsubst %.c,%.o,${SRC})

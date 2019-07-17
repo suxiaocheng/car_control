@@ -480,6 +480,7 @@ post_iterator(void *cls,
 		if ((key[1] >= '0') && (key[1] <= '9')) {
 			status = key[1] - '0';
 			set_mode(status);
+			return MHD_YES;
 		}
 	}
 	ERR("Unsupported form value `%s'\n", key);
