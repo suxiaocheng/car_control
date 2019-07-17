@@ -23,18 +23,28 @@
 
 #include "debug.h"
 
-enum control_pin{
-	FRONT_LEFT,
-	FRONT_RIGHT,
-	BACK_LEFT,
-	BACK_RIGHT
+enum mode_t {
+	MODE_TRUN_LEFT,
+	MODE_ACCERATE,
+	MODE_TRUN_RIGHT,
+	MODE_STOP,
+	MODE_BACKWARD,
+	MODE_MAX
 };
 
-enum control_status{
-	STATUS_OFF,
-	STATUS_ON
-};
+#define GPIO_LEFT_FRONT_FORWARD    0x28
+#define GPIO_LEFT_FRONT_BACKWARD   0x29
 
-int set_gpio(enum control_pin pin, enum control_status status);
+#define GPIO_RIGHT_FRONT_FORWARD   0x4
+#define GPIO_RIGHT_FRONT_BACKWARD  0x5
+
+#define GPIO_LEFT_BACK_FORWARD    0x2
+#define GPIO_LEFT_BACK_BACKWARD   0x3
+
+#define GPIO_RIGHT_BACK_FORWARD   0x0
+#define GPIO_RIGHT_BACK_BACKWARD  0x1
+
+int init_gpio(void);
+int set_mode(int mode);
 
 #endif //__GPIO_CTRL_H__

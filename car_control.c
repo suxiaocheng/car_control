@@ -12,6 +12,7 @@ static void *httpd_loop(void *arg)
 {
 	arg = arg;
 
+	init_gpio();
 	httpd_request_handle(8888);
 
 	pthread_mutex_lock(&global_lock);

@@ -1,6 +1,6 @@
 INCPATH=
 LIBSPATH=
-LIBS=-lpthread -lmicrohttpd
+LIBS=-lpthread -lmicrohttpd # -lwiringPi
 CC=gcc
 CFLAGS+=-g
 

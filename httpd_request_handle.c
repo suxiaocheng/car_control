@@ -470,25 +470,16 @@ post_iterator(void *cls,
 	struct Session *session = request->session;
 	int status;
 	int i;
-	const char gpio_stat[][4] = 	{{0, 1, 0, 1},\
-					 {1, 1, 1, 1},\
-					 {1, 0, 1, 0},\
-					 {0, 0, 0, 0}};
 
-	DEBUG("get %s\n", key);
+	DEBUG("get %s, size: 0x%x\n", key, size);
+
+	if (size == 0) {
+		return MHD_YES;
+	}
 	if ((key[0] == 'V') || (key[0] == 'v')) {
 		if ((key[1] >= '0') && (key[1] <= '9')) {
 			status = key[1] - '0';
-			if (status <= sizeof(gpio_stat)/sizeof(gpio_stat[0])){
-				DEBUG("Going to set gpio to state%d\n", status);
-				for (i=0; i<4; i++) {
-					set_gpio(i, gpio_stat[status][i]);
-				}
-				return MHD_YES;
-			} else {
-				ERR("Unknow gpio state%d\n", status);
-				return MHD_YES;
-			}
+			set_mode(status);
 		}
 	}
 	ERR("Unsupported form value `%s'\n", key);

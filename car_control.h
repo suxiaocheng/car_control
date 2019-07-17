@@ -22,6 +22,7 @@
 #include <microhttpd.h>
 
 #include "debug.h"
+#include "gpio_ctrl.h"
 
 #endif //__CAR_CONTROL_H__
 
